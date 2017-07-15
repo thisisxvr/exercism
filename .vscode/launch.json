@@ -8,9 +8,10 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
+      "sourceMaps": true,
       "program": "${file}",
       "outFiles": [
-        "./build/**/*.js"
+        "/Users/xvr/Documents/thisisxvr/exercism/typescript/rna-transcription/build/*.js"
       ]
     },
     {
