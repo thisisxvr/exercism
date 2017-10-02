@@ -64,27 +64,27 @@ describe('Bob', () => {
     expect(result).toEqual('Whatever.')
   })
 
-  xit('shouting with no exclamation mark', () => {
+  it('shouting with no exclamation mark', () => {
     const result = bob.hey('I HATE YOU')
     expect(result).toEqual('Whoa, chill out!')
   })
 
-  xit('statement containing question mark', () => {
+  it('statement containing question mark', () => {
     const result = bob.hey('Ending with a ? means a question.')
     expect(result).toEqual('Whatever.')
   })
 
-  xit('prattling on', () => {
+  it('prattling on', () => {
     const result = bob.hey('Wait! Hang on.  Are you going to be OK?')
     expect(result).toEqual('Sure.')
   })
 
-  xit('silence', () => {
+  it('silence', () => {
     const result = bob.hey('')
     expect(result).toEqual('Fine. Be that way!')
   })
 
-  xit('prolonged silence', () => {
+  it('prolonged silence', () => {
     const result = bob.hey('   ')
     expect(result).toEqual('Fine. Be that way!')
   })
