@@ -1,44 +1,32 @@
 export default class RobotName {
-  name = ''
-  robots = new Set()
+  name: string
+  robots: Set<string>
 
   constructor() {
-    const name = this.getName()
-    this.robots.add(name)
-    this.name = name
+    this.robots = new Set()
+    this.name = this.getName()
   }
 
-  resetName() {
-    let name
-    do {
-      name = this.getName()
-    } while (this.robots.has(name))
-    this.robots.add(name)
-    this.name = name
-  }
+  resetName(): void { this.name = this.getName() }
 
   private getName(): string {
-    let name = this.getRandomChar()
-    let char
+    let name
     do {
-      char = this.getRandomChar()
-    } while (char === name)
-    name += char
-
-    const num = this.getRandomNum()
-    if (num < 10) { name += '00' + String(num) }
-    else if (num < 100) { name += '0' + String(num) }
-    else { name += num }
-
+      name = this.getRandomChar()
+        + this.getRandomChar()
+        + this.getRandomDigit()
+        + this.getRandomDigit()
+        + this.getRandomDigit()
+    } while (this.robots.has(name))
+    this.robots.add(name)
     return name
   }
 
   private getRandomChar(): string {
-    return String.fromCharCode(Math.abs(
-      Math.random() * (91 - 65) + 65))  // 65 and 91 being unicode A and Z, respectively
+    return 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[Math.floor(Math.random() * 26)]
   }
 
-  private getRandomNum(): number {
-    return Math.round(Math.random() * (999 - 0) + 0)
+  private getRandomDigit(): string {
+    return '0123456789'[Math.floor(Math.random() * 10)]
   }
 }
