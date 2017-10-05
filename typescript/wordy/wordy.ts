@@ -1,49 +1,38 @@
-class WordProblem {
-  arg1: number
-  operand: string
-  arg2: number
-  operand2?: string
-  arg3?: number
+export class WordProblem {
+  private readonly operands = ['plus', 'minus', 'multiplied', 'divided']
+  private arg1: number
+  private operand: string
+  private arg2: number
+  private operand2?: string
+  private arg3?: number
 
   constructor(question: string) {
-    // if (typeof(question !== 'string')) { throw 'ArgumentError' }
-    const words = question.slice(0, -1).split(' ')
-    const operands = ['plus', 'minus', 'multiplied', 'divided', 'raised']
+    const words = question.slice(0, -1).split(' ') // Remove the '?' and create an array.
     this.arg1 = Number(words[2])
     this.operand = words[3]
 
-    if (operands.includes(this.operand)) {
+    if (this.operands.includes(this.operand)) {
       switch (this.operand) {
         case 'multiplied':
         case 'divided':
-          this.arg2 = Number(words[5])
-          break
-        default:
-          this.arg2 = Number(words[4])
-          break
+          words.splice(4, 1) // Remove 'by' from array for operand 1.
       }
+      this.arg2 = Number(words[4])
     }
-    // console.log(words, this.arg1, this.operand, this.arg2)
 
-    if (operands.includes(words[5]) || operands.includes(words[6])) {
-      words[5] in operands ? this.operand2 = words[5] : this.operand2 = words[6]
-
+    if (this.operands.includes(words[5])) {
+      this.operand2 = words[5]
       switch (this.operand2) {
         case 'multiplied':
         case 'divided':
-          this.arg3 = Number(words[8])
-          break
-        default:
-          this.arg3 = Number(words[7])
-          break
+          words.splice(6, 1) // Remove 'by' from array for operand 2.
       }
-    } else {
-      this.operand2 = undefined
-      this.arg3 = undefined
+      this.arg3 = Number(words[6])
     }
   }
 
   answer(): number {
+    if (!this.operands.includes(this.operand)) { throw new ArgumentError() }
     let answer = this.calculate(this.arg1, this.operand, this.arg2)
     if (this.operand2 && this.arg3) { answer = this.calculate(answer, this.operand2, this.arg3) }
     return answer
@@ -63,6 +52,6 @@ class WordProblem {
   }
 }
 
-class ArgumentError { }
-
-export { ArgumentError, WordProblem }
+export class ArgumentError extends Error {
+  constructor() { super() }
+}
